@@ -1,0 +1,687 @@
+/* ==================================================================
+   Shared UI — flat surfaces, hairline borders, minimal shadows
+   ================================================================== */
+
+/* ------------------------------------------------------------------
+   Avatar
+   ------------------------------------------------------------------ */
+
+.avatar {
+  --avatar-size: 28px;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  font-size: calc(var(--avatar-size) * 0.36);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  user-select: none;
+}
+
+.avatar--sm {
+  --avatar-size: 22px;
+}
+
+.avatar--lg {
+  --avatar-size: 36px;
+}
+
+.avatar--emerald {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+
+.avatar--amber {
+  color: var(--warning);
+  background: var(--warning-soft);
+  border-color: #e8d9ae;
+}
+
+.avatar--slate {
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+}
+
+/* ------------------------------------------------------------------
+   Tags
+   ------------------------------------------------------------------ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.68rem;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--line);
+  background: var(--surface-alt);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.badge--owner {
+  background: var(--surface-alt);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.badge--editor {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+.badge--viewer {
+  background: var(--surface-alt);
+  color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------------
+   Modals
+   ------------------------------------------------------------------ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(27, 27, 24, 0.38);
+  backdrop-filter: blur(2px);
+  animation: fade-in var(--transition) ease;
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - 3rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: pop-in var(--transition) ease;
+}
+
+.modal--wide {
+  max-width: 580px;
+}
+
+.modal__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem 0.85rem;
+}
+
+.modal__title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.modal__subtitle {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin-top: 0.15rem;
+}
+
+.modal__close {
+  margin-left: auto;
+}
+
+.modal__body {
+  padding: 0 1.25rem 1.15rem;
+  overflow-y: auto;
+}
+
+.modal__foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface-alt);
+}
+
+/* ------------------------------------------------------------------
+   Toasts
+   ------------------------------------------------------------------ */
+
+.toast-viewport {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: min(360px, calc(100vw - 2.5rem));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-md);
+  font-size: 0.82rem;
+  animation: pop-in var(--transition) ease;
+}
+
+.toast__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #fff;
+  margin-top: 1px;
+}
+
+.toast--success .toast__icon {
+  background: var(--success);
+}
+
+.toast--error .toast__icon {
+  background: var(--danger);
+}
+
+.toast--info .toast__icon {
+  background: var(--ink);
+}
+
+.toast__message {
+  flex: 1;
+  line-height: 1.45;
+}
+
+/* ------------------------------------------------------------------
+   Empty state
+   ------------------------------------------------------------------ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding: 3rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.empty-state__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  background: var(--surface-alt);
+  color: var(--ink-muted);
+  margin-bottom: 0.4rem;
+}
+
+.empty-state__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.empty-state__text {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  max-width: 46ch;
+}
+
+.empty-state__actions {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------------
+   Loading states
+   ------------------------------------------------------------------ */
+
+.loading-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 3rem 1rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.skeleton {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--surface-alt) 25%,
+    var(--surface-sunken) 37%,
+    var(--surface-alt) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+}
+
+.skeleton--row {
+  height: 56px;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/* ------------------------------------------------------------------
+   File importer
+   ------------------------------------------------------------------ */
+
+.dropzone {
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 1.9rem 1.25rem;
+  text-align: center;
+  background: var(--surface-alt);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  cursor: pointer;
+}
+
+.dropzone:hover,
+.dropzone.is-dragging {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.dropzone__icon {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 0.65rem;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--ink-muted);
+  border: 1px solid var(--line);
+}
+
+.dropzone__title {
+  font-weight: 550;
+  font-size: 0.9rem;
+}
+
+.dropzone__hint {
+  font-size: 0.79rem;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+}
+
+.format-chips {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+.format-chip {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.14rem 0.45rem;
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-muted);
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+}
+
+.file-preview__name {
+  font-weight: 550;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-preview__size {
+  font-size: 0.73rem;
+  color: var(--ink-subtle);
+}
+
+/* ------------------------------------------------------------------
+   Share dialog
+   ------------------------------------------------------------------ */
+
+.share-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.share-form__email {
+  flex: 1;
+}
+
+.share-form__role {
+  width: 122px;
+  flex: none;
+}
+
+.share-list {
+  margin-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.85rem;
+}
+
+.share-list__title {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-subtle);
+  margin-bottom: 0.5rem;
+}
+
+.share-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.share-item:last-child {
+  border-bottom: 0;
+}
+
+.share-item__meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.share-item__name {
+  font-size: 0.84rem;
+  font-weight: 550;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.share-item__email {
+  font-size: 0.73rem;
+  color: var(--ink-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.share-item__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.share-item__controls .select {
+  width: 104px;
+  padding: 0.28rem 1.6rem 0.28rem 0.5rem;
+  font-size: 0.78rem;
+  border-radius: var(--radius-xs);
+}
+
+.user-suggestions {
+  margin-top: 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.user-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.user-suggestion:hover {
+  background: var(--surface-alt);
+}
+
+.user-suggestion + .user-suggestion {
+  border-top: 1px solid var(--line);
+}
+
+.permission-note {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.79rem;
+  color: var(--ink-muted);
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 0.55rem 0.7rem;
+  margin-top: 0.85rem;
+}
+
+/* ------------------------------------------------------------------
+   Context menu (document rows)
+   ------------------------------------------------------------------ */
+
+.doc-menu {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.doc-menu__trigger {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xs);
+  color: var(--ink-subtle);
+  opacity: 0;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.doc-row:hover .doc-menu__trigger,
+.doc-menu__trigger[aria-expanded='true'],
+.doc-menu__trigger:focus-visible {
+  opacity: 1;
+}
+
+.doc-menu__trigger:hover {
+  background: var(--surface-sunken);
+  color: var(--ink);
+}
+
+.doc-menu__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 172px;
+  padding: 0.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  animation: pop-in var(--transition-fast) ease;
+  z-index: 10;
+}
+
+/* Rendered in a portal — fixed to the viewport, so nothing can clip it. */
+.doc-menu__panel--fixed {
+  position: fixed;
+  top: auto;
+  right: auto;
+  z-index: 90;
+  box-shadow: var(--shadow-lg);
+}
+
+.doc-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.36rem 0.45rem;
+  border-radius: var(--radius-xs);
+  color: var(--ink);
+  font-size: 0.81rem;
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.doc-menu__item:hover {
+  background: var(--surface-alt);
+}
+
+.doc-menu__item--danger {
+  color: var(--danger);
+}
+
+.doc-menu__item--danger:hover {
+  background: var(--danger-soft);
+}
+
+.doc-menu__item--split {
+  justify-content: space-between;
+}
+
+.doc-menu__hint {
+  font-size: 0.72rem;
+  color: var(--ink-subtle);
+  font-family: var(--font-mono);
+}
+
+.doc-menu__separator {
+  height: 1px;
+  margin: 0.25rem 0.35rem;
+  background: var(--line);
+}
+
+/* ------------------------------------------------------------------
+   User menu
+   ------------------------------------------------------------------ */
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem 0.25rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+.user-menu__trigger:hover,
+.user-menu__trigger[aria-expanded='true'] {
+  background: var(--surface-alt);
+}
+
+.user-menu__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 220px;
+  padding: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  animation: pop-in var(--transition-fast) ease;
+  z-index: 10;
+}
+
+.user-menu__panel--fixed {
+  position: fixed;
+  top: auto;
+  right: auto;
+  z-index: 90;
+  box-shadow: var(--shadow-lg);
+}
+
+.user-menu__identity {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.3rem;
+}
+
+.user-menu__name {
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.user-menu__email {
+  font-size: 0.72rem;
+  color: var(--ink-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.45rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.82rem;
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.user-menu__item:hover {
+  background: var(--surface-alt);
+}

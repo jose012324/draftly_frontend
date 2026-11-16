@@ -1,0 +1,273 @@
+/* ==================================================================
+   Workspace — editorial header, quiet stats, precise document rows
+   ================================================================== */
+
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.page-head__eyebrow {
+  margin-bottom: 0.4rem;
+}
+
+.page-head__title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.page-head__text {
+  color: var(--ink-muted);
+  font-size: 0.86rem;
+  margin-top: 0.3rem;
+  max-width: 62ch;
+}
+
+.page-head__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------------------
+   Stats — a hairline row, not cards
+   ------------------------------------------------------------------ */
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 1.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.stat {
+  flex: 1 1 160px;
+  padding: 0.9rem 1.15rem;
+  border-right: 1px solid var(--line);
+  transition: background-color var(--transition-fast);
+}
+
+.stat:hover {
+  background: var(--surface-alt);
+}
+
+.stat:last-child {
+  border-right: 0;
+}
+
+.stat__value {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--transition-fast);
+}
+
+.stat:hover .stat__value {
+  color: var(--accent);
+}
+
+.stat__label {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+  margin-top: 0.15rem;
+}
+
+/* ------------------------------------------------------------------
+   Sections
+   ------------------------------------------------------------------ */
+
+.section {
+  margin-top: 2rem;
+}
+
+.section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+.section__title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section__title-count {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-subtle);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Document sheet + rows
+   ------------------------------------------------------------------ */
+
+.doc-sheet {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.doc-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 148px 104px 88px 34px;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0.9rem 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+  transition: background-color var(--transition-fast);
+  animation: row-in var(--transition) ease both;
+}
+
+.doc-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.doc-row:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.doc-row:last-child {
+  border-bottom: 0;
+}
+
+.doc-row:hover {
+  background: var(--surface-alt);
+}
+
+.doc-row__main {
+  min-width: 0;
+}
+
+.doc-row__title {
+  font-size: 0.875rem;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  display: block;
+  max-width: 100%;
+  text-align: left;
+}
+
+.doc-row__title:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.doc-row__snippet {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--ink-subtle);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.doc-row__owner {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.doc-row__owner-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.doc-row__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.doc-row--compact {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+}
+
+.doc-row--compact .doc-row__actions {
+  gap: 0.45rem;
+}
+
+/* ------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .doc-row {
+    grid-template-columns: minmax(0, 1fr) 34px;
+    row-gap: 0.25rem;
+  }
+
+  .doc-row__owner,
+  .doc-row__meta,
+  .doc-row__role {
+    grid-column: 1;
+  }
+
+  .doc-row__actions {
+    grid-row: 1;
+    grid-column: 2;
+  }
+}

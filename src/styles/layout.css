@@ -1,0 +1,320 @@
+/* ==================================================================
+   Application shell — sidebar rail + workspace
+   ================================================================== */
+
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------------------
+   Sidebar — a quiet rail, not a card
+   ------------------------------------------------------------------ */
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  padding: 0.9rem 0.7rem 0.75rem;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.2rem 0.45rem 1.15rem;
+  color: var(--ink);
+}
+
+.sidebar__brand:hover {
+  text-decoration: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand__mark {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-xs);
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--surface);
+  flex: none;
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.015em;
+}
+
+.brand__tagline {
+  font-size: 0.66rem;
+  color: var(--ink-subtle);
+  letter-spacing: 0.01em;
+}
+
+.sidebar__section {
+  padding: 0.9rem 0.5rem 0.4rem;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.38rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-muted);
+  font-size: 0.845rem;
+  font-weight: 450;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  left: -0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 0;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  transition: height var(--transition-fast);
+}
+
+.nav-link:hover {
+  background: var(--surface-alt);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-link.is-active {
+  background: var(--surface-alt);
+  color: var(--ink);
+  font-weight: 550;
+}
+
+.nav-link.is-active::before {
+  height: 16px;
+}
+
+.nav-link__icon {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  flex: none;
+  color: var(--ink-subtle);
+}
+
+.nav-link:hover .nav-link__icon,
+.nav-link.is-active .nav-link__icon {
+  color: var(--ink-muted);
+}
+
+.nav-link.is-active .nav-link__icon {
+  color: var(--accent);
+}
+
+.nav-link__label {
+  flex: 1;
+}
+
+.nav-link__count {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+/* User card ------------------------------------------------------- */
+
+.sidebar__footer {
+  margin-top: auto;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.user-card:hover {
+  background: var(--surface-alt);
+}
+
+.user-card__meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.user-card__name {
+  font-size: 0.8rem;
+  font-weight: 550;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-card__email {
+  font-size: 0.7rem;
+  color: var(--ink-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------------
+   Top bar
+   ------------------------------------------------------------------ */
+
+.shell__main {
+  flex: 1;
+  min-width: 0;
+  margin-left: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0 1.5rem;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar__toggle {
+  display: none;
+}
+
+.topbar__search {
+  position: relative;
+  flex: 0 1 340px;
+}
+
+.topbar__search .input {
+  padding-left: 2rem;
+  background: var(--surface-alt);
+  border-color: transparent;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.topbar__search .input:hover {
+  background: var(--surface-sunken);
+  border-color: transparent;
+}
+
+.topbar__search .input:focus {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+
+.topbar__search-icon {
+  position: absolute;
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-subtle);
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+}
+
+.topbar__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar__divider {
+  width: 1px;
+  height: 20px;
+  background: var(--line);
+  margin: 0 0.15rem;
+}
+
+/* ------------------------------------------------------------------
+   Workspace
+   ------------------------------------------------------------------ */
+
+.workspace {
+  flex: 1;
+  padding: 2rem 1.5rem 4rem;
+  max-width: var(--content-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------ */
+
+@media (max-width: 980px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.is-open {
+    transform: none;
+  }
+
+  .shell__main {
+    margin-left: 0;
+  }
+
+  .topbar__toggle {
+    display: inline-flex;
+  }
+
+  .workspace {
+    padding: 1.4rem 1rem 3rem;
+  }
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(27, 27, 24, 0.35);
+  border: 0;
+  animation: fade-in var(--transition) ease;
+}
