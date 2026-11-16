@@ -38,6 +38,32 @@ from it (`https://your-api.example.com/api` → `wss://your-api.example.com/ws`)
 | `npm run preview`   | Serve the production build locally   |
 | `npm run typecheck` | Type-check only                      |
 
+## Deployment (Vercel)
+
+`vercel.json` is included and contains the **SPA rewrite** — without it, reloading a
+deep link such as `/app/my-documents` returns a 404 from the server, because the server
+does not know that the app has its own routes:
+
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+Vercel serves the existing files (assets, images) first and only rewrites the paths it
+cannot find, so the API calls to the separate backend are not affected.
+
+| Setting | Value |
+| ------- | ----- |
+| Framework preset | Vite |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Environment variable | `VITE_API_BASE_URL=https://<your-api>/api` |
+
+> If you deploy the **repository root** instead of this folder, move `vercel.json` to
+> the root and set the build command to `cd draftly_frontend && npm run build` with the
+> output directory `draftly_frontend/dist`.
+
 ## Project layout
 
 ```

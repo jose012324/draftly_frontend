@@ -186,8 +186,35 @@ from it (`https://api.example.com/api` → `wss://api.example.com/ws`).
 | `DATABASE_URL` | backend | PostgreSQL URL (empty → local SQLite) |
 | `REDIS_URL` | backend | Redis for the channel layer (empty → in-memory, single process) |
 
-The per-app files are `draftly_backend/.env.example` and `draftly_frontend/.env.example`;
-the root `.env.example` is a map of the whole project.
+The per-app files are `draftly_backend/.env.example` and `draftly_frontend/.env.example`.
+
+---
+
+## Deployment
+
+| Part | Where | Start command |
+| ---- | ----- | ------------- |
+| Frontend | Vercel | `npm run build` → `dist` (Vite preset) |
+| Backend | Render | `daphne -b 0.0.0.0 -p $PORT --proxy-headers draftly_backend.asgi:application` |
+
+The frontend needs `VITE_API_BASE_URL` pointing at the backend, and the backend needs
+`CORS_ALLOWED_ORIGINS` pointing at the frontend.
+
+**SPA routing:** the frontend is a single page application with its own routes
+(`/app`, `/app/my-documents`, `/documents/<id>` …). The server must serve
+`index.html` for all of them — otherwise reloading a deep link returns a 404. Vercel
+does that with the rewrite in `draftly_frontend/vercel.json`:
+
+```json
+{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+```
+
+Static files are served before the rewrite kicks in, so assets and the API calls are
+not affected.
+
+**The media files** (`media/documents/…`) live on the backend. The download endpoint
+streams them, so they work without a public media URL — but the folder has to be on a
+**persistent disk** on Render, otherwise the files disappear on every redeploy.
 
 ---
 
