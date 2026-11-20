@@ -243,6 +243,17 @@ export type DownloadFormat = 'docx' | 'original' | 'md' | 'html' | 'txt' | 'json
 /** Reads the file name out of a Content-Disposition header. */
 function filenameFromDisposition(header: string | undefined): string | null {
   if (!header) return null;
+
+  // Django uses RFC 5987 for non-ASCII file names: filename*=UTF-8''name.docx
+  const encoded = /filename\*\s*=\s*UTF-8''([^;]+)/i.exec(header);
+  if (encoded) {
+    try {
+      return decodeURIComponent(encoded[1].trim());
+    } catch {
+      return encoded[1].trim();
+    }
+  }
+
   const match = /filename="?([^";]+)"?/i.exec(header);
   return match ? match[1] : null;
 }
@@ -322,16 +333,13 @@ export const documentsApi = {
         responseType: 'blob',
       });
     } catch (error) {
-      // An error response is a blob as well — read the message out of it.
+      // An error response is a blob as well — read the real message out of it.
       if (axios.isAxiosError(error) && error.response?.data instanceof Blob) {
-        if (error.response?.status === 404) {
-          throw new Error(
-            'This backend does not know the download endpoint yet — restart it, it is probably running an older version.',
-          );
-        }
-
         const text = await error.response.data.text();
-        let detail = 'Could not download the document.';
+        let detail =
+          error.response.status === 404
+            ? 'That file is not available for this document.'
+            : 'Could not download the document.';
         try {
           const payload = JSON.parse(text) as { detail?: string };
           if (payload?.detail) detail = payload.detail;
